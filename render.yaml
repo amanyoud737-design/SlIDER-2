@@ -1,0 +1,45 @@
+services:
+  - type: web
+    name: ppt-maker
+    env: node
+    plan: starter
+    buildCommand: npm install && npm run build && npm run prisma:push
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+
+      - key: DATABASE_URL
+        sync: false
+
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_PASSWORD_HASH
+        sync: false
+
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+      - key: NEXT_PUBLIC_PAYPAL_CLIENT_ID
+        sync: false
+
+      # Sandbox:
+      # - key: PAYPAL_BASE
+      #   value: https://api-m.sandbox.paypal.com
+      - key: PAYPAL_BASE
+        value: https://api-m.paypal.com
+
+      - key: OPENAI_API_KEY
+        sync: false
+
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+
+      - key: APP_URL
+        sync: false
+
+disk:
+  name: uploads
+  mountPath: /var/data
+  sizeGB: 1
